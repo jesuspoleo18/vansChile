@@ -92,7 +92,7 @@ var blog = {
             });
         }
     },
-    //get posts to home
+    //get posts
     getPosts: function (url, container) {
         $.ajax({
             url: url,
@@ -143,24 +143,27 @@ var blog = {
                 var title = data.title.rendered;
                 var content = data.content.rendered;
 
+                // set title
                 document.title = title + " | Vans";
-
+                // append template
                 $blogContent.html(
                     '<aside id="postTagArea" class="post__tags">' +
-                    '<h3>Tags:</h3>' +
+                    '<h3 class="post__tags-title">Tags:</h3>' +
                     '<div class="tagsContainer">' + '</div>' +
                     '</aside>' +
                     '<article class="post__article">' +
                     '<h1>' + title + '</h1>' +
                     '<div>' + content + '</div>' +
                     '</article>' +
-                    '<aside id="postProductAndStatsArea" class="post__product-related">' +
-                    '<div id="postProductArea">' +
-                    '<h3>Produtos relacionados</h3>' +
+                    '<aside id="postProductAndStatsArea" class="post__related-container">' +
+                    '<div id="postProductArea" class="post__related-content">' +
+                    '<h3 class="post__related-title">Produtos relacionados</h3>' +
+                    '<div id="postStatsArea" class="post__related-product-container">' + '</div>' +
                     '</div>' +
-                    '<div id="postStatsArea">' + '</div>' +
                     '</aside>'
                 );
+                // add tags
+                blog.getTags(data.categories);
             }
         });
     },
@@ -177,5 +180,23 @@ var blog = {
                 return sParameterName[1] === undefined ? true : sParameterName[1];
             }
         }
+    },
+    // get tags to post page
+    getTags: function (param) {
+        var urlCateg = "https://blog.vans.com.br/wp-json/wp/v2/categories/";
+        $.each(param, function (i, val) {
+            $.ajax({
+                url: urlCateg + param[i],
+                type: 'GET',
+                //dataType: 'jsonp',
+                success: function (dataTag) {
+                    var tagHref = '/'+ dataTag.name;
+                    var tagName = dataTag.name;
+                    var template = '<a href="'+ tagHref +'" class="post__tag-item">'+ tagName +'</a>';
+                    var $tagContainer = $(".tagsContainer");
+                    $tagContainer.append(template);
+                }
+            });
+        });
     }
 };

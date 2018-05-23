@@ -4804,20 +4804,41 @@ body.departamento.deptoKids {
 .post__page-content {
     /*     border: 1px solid black; */
     margin-top: 3rem;
-    width: 86%;
+    width: 90%;
     flex-flow: wrap;
     justify-content: space-between;
 }
 
 .post__tags,
-.post__product-related {
+.post__related-container {
     /*     border: 1px solid blue; */
-    width: 18%;
+    width: 20%;
 }
+
+.post__tags {
+    border-right: 1px solid #ccc;
+}
+
+/* tags */
+
+.post__tags-title {
+    border-bottom: 1px solid #ccc;
+    font-size: 1.1rem;
+    letter-spacing: .05rem;
+    margin-right: 1.5rem;
+    padding-bottom: .5rem;
+}
+
+.tagsContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+/* article */
 
 .post__article {
     /*     border: 1px solid red; */
-    width: 60%;
+    width: 55%;
     display: flex;
     flex-flow: wrap;
     justify-content: center;
@@ -4831,6 +4852,7 @@ body.departamento.deptoKids {
 .post__article>h1 {
     font-family: 'ITC Franklin Gothic Std DmCd';
     font-size: 3rem;
+    width: 100%;
 }
 
 .post__article>h1+div>p:empty {
@@ -4839,6 +4861,8 @@ body.departamento.deptoKids {
 
 .post__article>h1+div>p {
     font-family: 'ITC Franklin Gothic Std Mdcd', "Arial Narrow Bold", Arial, sans-serif;
+    font-size: 1rem;
+    margin: 1.2rem 0;
     width: 100%;
 }
 
@@ -4848,6 +4872,19 @@ body.departamento.deptoKids {
 
 .post__article>h1+div>p>img+img {
     margin-top: 1rem;
+}
+
+/* product related */
+
+.post__related-container {
+    border-left: 1px solid #ccc;
+}
+
+.post__related-title {
+    border-bottom: 1px solid #ccc;
+    font-family: 'ITC Franklin Gothic Std DmCd';
+    margin-left: 1.5rem;
+    padding-bottom: .5rem;
 }
 
 /*[b11.Offcanvas Menu ]
