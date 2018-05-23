@@ -4852,7 +4852,6 @@ body.departamento.deptoKids {
 .post__article>h1 {
     font-family: 'ITC Franklin Gothic Std DmCd';
     font-size: 3rem;
-    width: 100%;
 }
 
 .post__article>h1+div>p:empty {

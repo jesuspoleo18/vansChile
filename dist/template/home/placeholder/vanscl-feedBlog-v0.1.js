@@ -132,7 +132,9 @@ var blog = {
     },
     //get post page
     getPostPage: function (url_address, id_Post) {
+        var postId;
         var $blogContent = $(".post__page-content");
+        postId = id_Post;
         $.ajax({
             type: 'GET',
             //dataType: 'jsonp',
@@ -164,6 +166,8 @@ var blog = {
                 );
                 // add tags
                 blog.getTags(data.categories);
+                // ger related products
+                blog.getProductsRelated(postId);
             }
         });
     },
@@ -190,13 +194,76 @@ var blog = {
                 type: 'GET',
                 //dataType: 'jsonp',
                 success: function (dataTag) {
-                    var tagHref = '/'+ dataTag.name;
+                    var tagHref = '/' + dataTag.name;
                     var tagName = dataTag.name;
-                    var template = '<a href="'+ tagHref +'" class="post__tag-item">'+ tagName +'</a>';
+                    var template = '<a href="' + tagHref + '" class="post__tag-item">' + tagName + '</a>';
                     var $tagContainer = $(".tagsContainer");
                     $tagContainer.append(template);
                 }
             });
+        });
+    },
+    getProductsRelated: function (id_Post) {
+        var postId;
+        var host = "https://blog.vans.com.br";
+        var allPosts = host + "/wp-json/wp/v2/posts=";
+        postId = id_Post;
+        $.ajax({
+            url: "https://blog.vans.com.br/wp-json/wp/v2/comments/?post=" + postId,
+            type: 'GET',
+            crossDomain: true,
+            cache: false,
+            success: function (commentData) {
+                var stats;
+                var prodIds;
+
+                if (commentData.length == 2) {
+                    //two coments
+                    if (commentData[0].content.rendered.indexOf('h3') >= 0 && commentData[0].content.rendered.indexOf('h4') >= 0) { //finding out where are product ids and where's stats 
+                        stats = commentData[0].content.rendered;
+                        prodIds = commentData[1].content.rendered;
+                    } else if (commentData[1].content.rendered.indexOf('h3') >= 0 && commentData[1].content.rendered.indexOf('h4') >= 0) { //finding out where are product ids and where's stats
+                        stats = commentData[1].content.rendered;
+                        prodIds = commentData[0].content.rendered;
+                    }
+                }
+                else if (commentData.length == 1) {
+                    //one comment
+                    if (commentData[0].content.rendered.indexOf('h3') >= 0 && commentData[0].content.rendered.indexOf('h4') >= 0) { //finding out wether it's product or stats
+                        stats = commentData[0].content.rendered;
+                        prodIds = false;
+                    } else {
+                        stats = false;
+                        prodIds = commentData[0].content.rendered;
+                    }
+                }
+                else if (commentData.length == 0 || commentData.length > 2) {
+                    //no comments or too much comments
+                    stats = prodIds = false;
+                }
+
+                if (prodIds) {
+                    var hostVtex = "https://lojavans.vtexcommercestable.com.br";
+                    var checkProduct = hostVtex + "/api/catalog_system/pub/products/search/?fq=alternateIds_RefId:";
+                    var prodIdsFormat = prodIds.replace(/<[^>]*>/g, "").trim().split(',');
+
+                    console.log(prodIdsFormat);
+                    $.each(prodIdsFormat, function (i, val) {
+                        $.ajax({
+                            url: checkProduct + this,
+                            type: 'GET',
+                            crossDomain: true,
+                            cache: false,
+                            success: function (productData) {
+                                console.log(productData);
+                            }
+                        });
+                    });
+                }
+                if (stats) {
+                    $("body.post .institucionalPage .container-center aside #postStatsArea").append(stats);
+                }
+            }
         });
     }
 };

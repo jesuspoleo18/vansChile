@@ -1060,19 +1060,19 @@ if ("function" !== typeof (String.prototype.trim)) String.prototype.trim = funct
                     } catch (d) {
                         try {
                             console.info(a.join("\n"))
-                        } catch (e) {}
+                        } catch (e) { }
                     } else try {
                         console.error.apply(console, a)
                     } catch (f) {
                         try {
                             console.error(a.join("\n"))
-                        } catch (g) {}
+                        } catch (g) { }
                     } else try {
                         console.warn.apply(console, a)
                     } catch (h) {
                         try {
                             console.warn(a.join("\n"))
-                        } catch (k) {}
+                        } catch (k) { }
                     }
             }
         };
@@ -1089,7 +1089,7 @@ if ("function" !== typeof (String.prototype.trim)) String.prototype.trim = funct
             // Define en qué selector la acción de observar el desplazamiento será aplicado (ej .: $ (window) .scroll (...))
             scrollBy: document,
             // Callback Cuando se completa una solicitud ajax de la vitrina (prateleira)
-            callback: function () {},
+            callback: function () { },
             // Cálculo del tamaño del footer para que una nueva página sea llamada antes de que el usuario llegue al "final" del sitio
             getShelfHeight: function ($this) {
                 return ($this.scrollTop() + $this.height());
@@ -1258,9 +1258,9 @@ if ("function" !== typeof (String.prototype.trim)) String.prototype.trim = funct
     });
 
     // Anula función de VTEX que hace desplazarse en la página después de paginar
-    window.goToTopPage = function () {};
+    window.goToTopPage = function () { };
     $(function () {
-        window.goToTopPage = function () {};
+        window.goToTopPage = function () { };
     });
 })(jQuery);
 
@@ -1399,7 +1399,9 @@ var blog = {
     },
     //get post page
     getPostPage: function (url_address, id_Post) {
+        var postId;
         var $blogContent = $(".post__page-content");
+        postId = id_Post;
         $.ajax({
             type: 'GET',
             //dataType: 'jsonp',
@@ -1431,6 +1433,8 @@ var blog = {
                 );
                 // add tags
                 blog.getTags(data.categories);
+                // ger related products
+                blog.getProductsRelated(postId);
             }
         });
     },
@@ -1457,19 +1461,77 @@ var blog = {
                 type: 'GET',
                 //dataType: 'jsonp',
                 success: function (dataTag) {
-                    // console.log(dataTag);
-                    $.each(dataTag, function (i, val) {
-                        var _thisName = this.name.toLowerCase();
-                        var template = '<a href="' + _thisName + '" class="post__tag-item"></a>';
-                        var $tagContainer = $(".tagsContainer");
-                        $tagContainer.append(template);
-                    });
+                    var tagHref = '/' + dataTag.name;
+                    var tagName = dataTag.name;
+                    var template = '<a href="' + tagHref + '" class="post__tag-item">' + tagName + '</a>';
+                    var $tagContainer = $(".tagsContainer");
+                    $tagContainer.append(template);
                 }
             });
         });
+    },
+    getProductsRelated: function (id_Post) {
+        var postId;
+        var host = "https://blog.vans.com.br";
+        var allPosts = host + "/wp-json/wp/v2/posts=";
+        postId = id_Post;
+        $.ajax({
+            url: "https://blog.vans.com.br/wp-json/wp/v2/comments/?post=" + postId,
+            type: 'GET',
+            crossDomain: true,
+            cache: false,
+            success: function (commentData) {
+                var stats;
+                var prodIds;
+
+                if (commentData.length == 2) {
+                    //two coments
+                    if (commentData[0].content.rendered.indexOf('h3') >= 0 && commentData[0].content.rendered.indexOf('h4') >= 0) { //finding out where are product ids and where's stats 
+                        stats = commentData[0].content.rendered;
+                        prodIds = commentData[1].content.rendered;
+                    } else if (commentData[1].content.rendered.indexOf('h3') >= 0 && commentData[1].content.rendered.indexOf('h4') >= 0) { //finding out where are product ids and where's stats
+                        stats = commentData[1].content.rendered;
+                        prodIds = commentData[0].content.rendered;
+                    }
+                }
+                else if (commentData.length == 1) {
+                    //one comment
+                    if (commentData[0].content.rendered.indexOf('h3') >= 0 && commentData[0].content.rendered.indexOf('h4') >= 0) { //finding out wether it's product or stats
+                        stats = commentData[0].content.rendered;
+                        prodIds = false;
+                    } else {
+                        stats = false;
+                        prodIds = commentData[0].content.rendered;
+                    }
+                }
+                else if (commentData.length == 0 || commentData.length > 2) {
+                    //no comments or too much comments
+                    stats = prodIds = false;
+                }
+
+                if (prodIds) {
+                    var hostVtex = "https://lojavans.vtexcommercestable.com.br";
+                    var checkProduct = hostVtex + "/api/catalog_system/pub/products/search/?fq=alternateIds_RefId:";
+                    var prodIdsFormat = prodIds.replace(/<[^>]*>/g, "").trim().split(',');
+
+                    console.log(prodIdsFormat);
+                    $.each(prodIdsFormat, function(i,val) {
+                        $.ajax({
+                            url: checkProduct + this,
+                            type: 'GET',
+                            success: function (productData) {
+                                console.log(productData);
+                            }
+                        });
+                    });
+                }
+                if (stats) {
+                    $("body.post .institucionalPage .container-center aside #postStatsArea").append(stats);
+                }
+            }
+        });
     }
 };
-
 /* [Execute Functions]
 =========================================*/
 $(document).ready(function ($) {
