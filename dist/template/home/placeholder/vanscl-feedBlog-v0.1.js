@@ -1,6 +1,9 @@
 var blog = {
     init: function () {
-        blog.getPostHome(blog.getPostCallback);
+        var $bodyHome = $("body.home");
+        if ($bodyHome.length) {
+            blog.getPostHome(blog.getPostCallback);
+        }
         blog.getPostsToPagePost();
     },
     // append posts to home
@@ -23,30 +26,30 @@ var blog = {
         blog.getPosts(posts + "3", $feedBlog + " " + ".feedSkate");
         blog.getPosts(posts + "8", $feedBlog + " " + ".feedSurf");
         blog.tabs();
-        setTimeout(function(){
+        setTimeout(function () {
             callback();
         }, 5000);
     },
     // find post class in body
-    getPostsToPagePost: function(){
+    getPostsToPagePost: function () {
         var $body = $("body.post");
-        var $blogContent = $(".blog__content");
+        var $blogContent = $(".post__page-content");
         var postUrl = "https://blog.vans.com.br/wp-json/wp/v2/posts/";
-        var tech = getUrlParameter('id');
+        var tech = blog.getUrlParameter('id');
         var urlAllPost = "https://blog.vans.com.br/wp-json/wp/v2/posts?_embed";
 
         if ($body.length) {
             // $blogContent.html('<div class="container-center blog"></div>');
             if (window.location.href.indexOf("id") > -1) {
-                getPostPage(postUrl + tech, tech);
+                blog.getPostPage(postUrl + tech, tech);
             } else {
-                getPosts(urlAllPost, ".blog__content");
+                blog.getPosts(urlAllPost, ".post__page-content");
                 document.title = "Blog | Vans";
             }
         }
     },
     // call back for append post in home
-    getPostCallback: function(){
+    getPostCallback: function () {
         console.log('all post loaded');
         blog.checkForEmptyPost();
     },
@@ -97,7 +100,7 @@ var blog = {
             crossDomain: true,
             cache: false,
             success: function (data) {
-                $.each(data, function(i, val){
+                $.each(data, function (i, val) {
                     var link = "/post?id=" + this.id;
                     var title = this.title.rendered;
                     var excerpt = this.excerpt.rendered;
@@ -110,17 +113,17 @@ var blog = {
                         foto = this._embedded["wp:featuredmedia"][0].media_details.sizes.full.source_url;
                     }
                     $(container).append(
-                        '<div class="post-item">'+
-                            '<article class="teaser">'+
-                                '<a class="thumb" href="' + link + '" title="' + title + '">'+
-                                    '<picture class="ratio-square">'+
-                                        '<img src="' + foto + '" alt="' + title + '" title="' + title + '">'+
-                                    '</picture>'+
-                                '</a>'+ postName + 
-                                '<div class="details">'+
-                                    '<p class="short">' + excerpt + '</p>' + readMore + 
-                                '</div>'+
-                            '</article>'+
+                        '<div class="post-item">' +
+                        '<article class="teaser">' +
+                        '<a class="thumb" href="' + link + '" title="' + title + '">' +
+                        '<picture class="ratio-square">' +
+                        '<img src="' + foto + '" alt="' + title + '" title="' + title + '">' +
+                        '</picture>' +
+                        '</a>' + postName +
+                        '<div class="details">' +
+                        '<p class="short">' + excerpt + '</p>' + readMore +
+                        '</div>' +
+                        '</article>' +
                         '</div>'
                     );
                 });
@@ -128,12 +131,13 @@ var blog = {
         });
     },
     //get post page
-    getPostPage:function (url_address, id_Post) {
-        var $blogContent = $(".blog__content");
+    getPostPage: function (url_address, id_Post) {
+        var $blogContent = $(".post__page-content");
         $.ajax({
             type: 'GET',
             //dataType: 'jsonp',
             url: url_address,
+            crossDomain: true,
             cache: false,
             success: function (data) {
                 var title = data.title.rendered;
@@ -142,26 +146,26 @@ var blog = {
                 document.title = title + " | Vans";
 
                 $blogContent.html(
-                    '<aside id="postTagArea">'+
-                        '<h3>Tags:</h3>'+
-                            '<div class="tagsContainer">'+'</div>'+
-                    '</aside>'+
-                    '<article>'+
-                        '<h1>' + title + '</h1>'+
-                        '<div>' + content + '</div>'+
-                    '</article>'+
-                    '<aside id="postProductAndStatsArea">'+
-                        '<div id="postProductArea">'+
-                            '<h3>Produtos relacionados</h3>'+
-                        '</div>'+
-                        '<div id="postStatsArea">'+'</div>'+
+                    '<aside id="postTagArea" class="post__tags">' +
+                    '<h3>Tags:</h3>' +
+                    '<div class="tagsContainer">' + '</div>' +
+                    '</aside>' +
+                    '<article class="post__article">' +
+                    '<h1>' + title + '</h1>' +
+                    '<div>' + content + '</div>' +
+                    '</article>' +
+                    '<aside id="postProductAndStatsArea" class="post__product-related">' +
+                    '<div id="postProductArea">' +
+                    '<h3>Produtos relacionados</h3>' +
+                    '</div>' +
+                    '<div id="postStatsArea">' + '</div>' +
                     '</aside>'
                 );
             }
         });
     },
     // get url id
-    getUrlParameter:function(sParam) {
+    getUrlParameter: function (sParam) {
         var sPageURL = decodeURIComponent(window.location.search.substring(1));
         var sURLVariables = sPageURL.split('&');
         var sParameterName;

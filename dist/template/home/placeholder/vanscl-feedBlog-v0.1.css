@@ -54,3 +54,57 @@
 	margin-right:.4rem;
 	width:24%;
 }
+
+/*[o0.Post page]  
+======================================================= */
+
+.post{}
+
+.blog__container,
+.blog__content
+{
+	display:flex;
+	justify-content:center;
+}
+.blog__content{
+	border:1px solid black;
+	margin-top:3rem;
+	width:90%;
+	flex-flow:wrap;
+	justify-content:space-between;
+}
+
+.post__tags,
+.post__product-related{
+	border:1px solid blue;
+	width:18%;
+}
+
+.post__article{
+	border:1px solid red;
+	width:60%;
+	display:flex;
+	flex-flow:wrap;
+	justify-content:center;
+}
+.post__article>h1+div{
+	display:flex;
+	flex-direction:column;
+}
+.post__article>h1{
+	font-family: 'ITC Franklin Gothic Std DmCd'; 
+	font-size:3rem;
+}
+.post__article>h1+div>p:empty{
+	display:none;
+}
+.post__article>h1+div>p{
+	font-family: 'ITC Franklin Gothic Std Mdcd', "Arial Narrow Bold", Arial, sans-serif;
+	width:100%;
+}
+.post__article>h1+div>p>img{
+	width:100%;
+}
+.post__article>h1+div>p>img+img{
+	margin-top:1rem;
+}
