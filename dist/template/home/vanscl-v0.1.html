@@ -1,0 +1,119 @@
+<!-- 
+ *
+ * Desarrollado por Ecomsur
+ * Foundation v.6.4
+ *
+ -->
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:vtex="http://www.vtex.com.br/2009/vtex-common" xmlns:vtex.cmc="http://www.vtex.com.br/2009/vtex-commerce" lang="es" class="no-js">
+
+<!-- CONDITIONAL IE-->
+<vtex:contentPlaceHolder id="Conditional IE" />
+
+<head>
+    <title>VANS CHILE | WEB OFICIAL</title>
+
+    <vtex:metaTags/>
+
+    <vtex:template id="0-vans-head" />
+</head>
+
+<body>
+
+    <div class="off-canvas-wrapper">
+
+        <!-- Strip Promotional - Controller Custom -->
+        <vtex:contentPlaceHolder id="CoverPop-up" />
+        <!-- /end Strip Promotional - Controller Custom -->
+
+        <vtex:template id="0-vans-header" />
+        
+        <!-- Minicart Fixed -->
+        <button id="cartFixed" type="button" class=" " data-toggle="offcanvas__minicart"><vtex.cmc:AmountItemsInCart/></button>
+        <div id="offcanvas__minicart" class="off-canvas position-right" data-off-canvas="">
+            <vtex.cmc:AmountItemsInCart/>
+            <vtex.cmc:miniCart/>
+        </div>
+        <!-- /endMinicart Fixed -->
+ 
+        <div class="off-canvas-content" data-off-canvas-content="">
+
+            <vtex:template id="0-vans-navigator" />
+
+            <!-- CONTAINER -->
+            <main>
+                <section id="home" class="main__section container">
+
+
+                    <!--Slide Home-->
+                    <div id="slidehome" class="grid-container">
+                        <div class="home-slide grid-x grid-margin-x">
+                            <vtex:contentPlaceHolder id="SlideHome" />
+                        </div>
+                    </div>
+                    <!--end Slide Home -->
+
+                    <!-- Banners Home -->
+                    <div class="grid-container shopHome__banners">
+                        <div class="grid-x grid-margin-x"> 
+                            <!-- Banners Collections -->
+                            <vtex:contentPlaceHolder id="Banners Coleccion Shop" />
+                            <!-- /end Banners Collections -->
+                        </div>
+                    </div>
+                    <!--end Banners Home -->
+                    
+                    <!-- Banner Video -->
+                    <div class="grid-container bannerVideo">
+                        <div class="container-center">  
+                            <vtex:contentPlaceHolder id="Banner Video Home" />
+                        </div>
+                    </div>
+                    <!-- end Banner Video -->
+
+                    <!-- feed blog -->
+                    <div class="feedBlogMain-container">
+                        <vtex:contentPlaceHolder id="feedBlogContent" />
+                    </div>
+                    <!-- /.end feed blog -->
+
+                    <!-- Stores -->
+                    <div class="grid-container full stores">
+                    
+                        <div class="encuentranos_content">
+                        
+                            <div class="encuentranos_content-mapa tiendas_content-mapa">
+                            
+                                <h2>Encuentra tu Tienda</h2>
+                            
+                                <!-- <select id="ciudad" class="trigger pop trsn" data-dropdown="dropdown_bar" aria-controls="dropdown_bar" aria-expanded="false"></select> -->
+
+                                <select id="pais" aria-expanded="false"></select>
+
+                                <select id="ciudad" class="trigger pop trsn" aria-expanded="false"></select>
+                                    
+                                <div id="map-canvas"></div>
+                                
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <!-- /.end Stores -->
+
+                </section>
+
+            </main>
+            <!-- end .container -->
+
+            <vtex:template id="0-vans-footer" />
+        </div>
+
+    </div>
+    <script src="/files/vans-tiendas.js"></script>
+    <!-- Ladesk - Controller Custom -->
+    <vtex.cmc:ladesk/>
+    <!-- /end Ladesk - Controller Custom -->
+</body>
+
+</html>

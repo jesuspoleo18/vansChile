@@ -1,0 +1,56 @@
+/*
+[c6.feedBlog home ]
+======================================================= */
+
+.feedBlogMain,
+.feedBlogMain-container,
+.feedBlogMain-content
+{
+	width:100%;
+	display:flex;
+	flex-flow:wrap;
+	align-items:center;
+	justify-content:center;
+}
+.feedBlog__info-tabs{
+	margin-bottom:2rem;
+	width:80%;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+}
+.tab__btn{
+	position:relative;
+	margin-right:1.5rem;
+	flex:auto;
+	width:auto;
+}
+.tab__btn:after{
+	content:"/";
+	position:absolute;
+	right:0;
+}
+.tab__btn:last-child{
+	margin:0;
+}
+.tab__btn:last-child:after{
+	content:"";
+}
+
+#feedBlog{
+	/* 	border:1px solid red; */
+	position:relative;
+	width:90%;
+	display:flex;
+	flex-flow:wrap;
+}
+.tab_content{
+	width:100%;
+	display:flex;
+	flex-flow:wrap;
+}
+.post-item{
+	margin:.2rem;
+	margin-right:.4rem;
+	width:24%;
+}

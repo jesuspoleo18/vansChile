@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:vtex="http://www.vtex.com.br/2009/vtex-common" xmlns:vtex.cmc="http://www.vtex.com.br/2009/vtex-commerce" lang="pt-br">
+
+<head>
+    <vtex:contentPlaceHolder id="seo" />
+    <vtex:metaTags/>
+    <meta name="google-site-verification" content="UhZrdT_c1VvUMLe-C7DO1Ul7dKwYCEDgQjGhC1lKKtA" />
+    <vtex:template id="vans-head" />
+    <link href="/arquivos/foundation.001.css" rel="stylesheet" type="text/css" />
+    <link href="/arquivos/vans.popUp.002.css?v=1" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+    <div class="container">
+            
+        <vtex:template id="vans-header" />
+
+        <div id="content" class="row-fluid">
+
+            <!-- Banner Principal -->
+            <div id="bannerInicialMain">
+                <div class="bannerInicial01">
+                   <vtex:contentPlaceHolder id="Banner Principal" />
+                </div>
+                <!--div class="bannerInicial01 bannerInicial01Mobile">
+                   <vtex:contentPlaceHolder id="Banner Principal Mobile" />
+                </div-->
+            </div>
+
+            <!-- Menu The Wall -->
+            <div class="menuBlog">
+                <div class="container-center">  
+                    <vtex.cmc:menuBlogTheWall />
+                </div>
+            </div>
+            
+            <!-- News Inside -->
+            <div class="newsHome">
+                <div class="container-center">  
+                    <vtex.cmc:newsInside />
+                </div>
+            </div>
+            
+            <!-- Feed Blog -->
+            <div class="feedBlogMain">
+                <div class="container-center">  
+                    <!--vtex:contentPlaceHolder id="Feed Blog" /-->
+                    <div id="feedBlog">
+                        <div class="feedAll"></div>
+                        <div class="feedClassis"></div>
+                        <div class="feedEventos"></div>
+                        <div class="feedFeminino"></div>
+                        <div class="feedHouse"></div>
+                        <div class="feedKids"></div>
+                        <div class="feedMasculino"></div>
+                        <div class="feedNews"></div>
+                        <div class="feedSkate"></div>
+                        <div class="feedSurf"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Banner Video -->
+            <div class="bannerVideo">
+                <div class="container-center">  
+                    <vtex:contentPlaceHolder id="Banner Video" />
+                </div>
+            </div>
+            
+            <!-- Banner Footer -->
+            <div class="bannersFooter">
+                <vtex:contentPlaceHolder id="Banner Footer" />
+            </div>
+            
+            <!-- storeLocator -->
+            <!--vtex.cmc:storeLocator /-->
+
+        </div>
+        
+        <vtex:template id="vans-footer" />
+
+    </div>
+    
+    <div id="popUpNews" style="display: none;" class="modal fade" role="dialog" >
+    	<div id="popUpNewsMain">
+            <span class="close" data-dismiss="modal">Fechar</span>
+            <vtex.cmc:newsPopUp />
+    	</div>
+	</div>
+	<a style="display: none;" data-toggle="modal" data-target="#popUpNews" class="popUpNewsBt"></a>
+    
+<vtex:template id="vans-scripts" /> 
+<!--
+<script src="/arquivos/vans.popUp.003.js"></script> 
+-->
+</body>
+</html>
