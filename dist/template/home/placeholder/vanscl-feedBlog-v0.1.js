@@ -1,7 +1,9 @@
 var blog = {
     init: function () {
         blog.getPostHome(blog.getPostCallback);
+        blog.getPostsToPagePost();
     },
+    // append posts to home
     getPostHome: function (callback) {
 
         var host = "https://blog.vans.com.br";
@@ -25,27 +27,30 @@ var blog = {
             callback();
         }, 5000);
     },
+    // find post class in body
+    getPostsToPagePost: function(){
+        var $body = $("body.post");
+        var $blogContent = $(".blog__content");
+        var postUrl = "https://blog.vans.com.br/wp-json/wp/v2/posts/";
+        var tech = getUrlParameter('id');
+        var urlAllPost = "https://blog.vans.com.br/wp-json/wp/v2/posts?_embed";
+
+        if ($body.length) {
+            // $blogContent.html('<div class="container-center blog"></div>');
+            if (window.location.href.indexOf("id") > -1) {
+                getPostPage(postUrl + tech, tech);
+            } else {
+                getPosts(urlAllPost, ".blog__content");
+                document.title = "Blog | Vans";
+            }
+        }
+    },
+    // call back for append post in home
     getPostCallback: function(){
         console.log('all post loaded');
         blog.checkForEmptyPost();
     },
-    checkForEmptyPost: function(){
-        var $tabContent = $(".tab_content");
-        if($tabContent.length){
-            $tabContent.each(function(){
-                _thisTabContent = $(this);
-                _thisClass = _thisTabContent.attr('class');
-                _thisSplit = $.trim(_thisClass.split('tab_content')[1]);
-                // _thisPostItem = $('.' + _thisSplit + ' ' + '.post-item');
-                _thisPostItem = _thisTabContent.find('.post-item');
-
-                if (_thisPostItem.length == 0) {
-                    $('.tab__btn'+'.' +_thisSplit).remove();
-                    console.log('.' +_thisSplit + ' ' +'does not have posts');
-                }
-            });
-        }
-    },
+    // load tabs after post append home
     tabs: function () {
         var $a = '.tab__btn';
         var $b = '.tab_content';
@@ -66,8 +71,26 @@ var blog = {
         });
         return false;
     },
-    //get posts
-    getPosts: function (url, container, details = true) {
+    // check for empy post after tabs
+    checkForEmptyPost: function () {
+        var $tabContent = $(".tab_content");
+        if ($tabContent.length) {
+            $tabContent.each(function () {
+                _thisTabContent = $(this);
+                _thisClass = _thisTabContent.attr('class');
+                _thisSplit = $.trim(_thisClass.split('tab_content')[1]);
+                // _thisPostItem = $('.' + _thisSplit + ' ' + '.post-item');
+                _thisPostItem = _thisTabContent.find('.post-item');
+
+                if (_thisPostItem.length == 0) {
+                    $('.tab__btn' + '.' + _thisSplit).remove();
+                    console.log('.' + _thisSplit + ' ' + 'does not have posts');
+                }
+            });
+        }
+    },
+    //get posts to home
+    getPosts: function (url, container) {
         $.ajax({
             url: url,
             type: 'GET',
@@ -104,78 +127,51 @@ var blog = {
             }
         });
     },
-    //get related based on wordpress comments
-    getRelatedandStats: function (postId, relatedContainer, statsContainer) {
+    //get post page
+    getPostPage:function (url_address, id_Post) {
+        var $blogContent = $(".blog__content");
         $.ajax({
-            url: "https://blog.vans.com.br/wp-json/wp/v2/comments/?post=" + postId,
             type: 'GET',
-            success: function (commentData) {
-                var stats, prodIds;
+            //dataType: 'jsonp',
+            url: url_address,
+            cache: false,
+            success: function (data) {
+                var title = data.title.rendered;
+                var content = data.content.rendered;
 
-                if (commentData.length == 2) { //two coments
-                    if (commentData[0].content.rendered.indexOf('h3') >= 0 && commentData[0].content.rendered.indexOf('h4') >= 0) { //finding out where are product ids and where's stats 
-                        stats = commentData[0].content.rendered;
-                        prodIds = commentData[1].content.rendered;
-                    } else if (commentData[1].content.rendered.indexOf('h3') >= 0 && commentData[1].content.rendered.indexOf('h4') >= 0) { //finding out where are product ids and where's stats
-                        stats = commentData[1].content.rendered;
-                        prodIds = commentData[0].content.rendered;
-                    }
-                } else if (commentData.length == 1) { //one comment
-                    if (commentData[0].content.rendered.indexOf('h3') >= 0 && commentData[0].content.rendered.indexOf('h4') >= 0) { //finding out wether it's product or stats
-                        stats = commentData[0].content.rendered;
-                        prodIds = false;
-                    } else {
-                        stats = false;
-                        prodIds = commentData[0].content.rendered;
-                    }
-                } else if (commentData.length == 0 || commentData.length > 2) { //no comments or too much comments
-                    stats = prodIds = false;
-                }
-                if (prodIds) {
-                    prodIds = prodIds.replace(/<[^>]*>/g, "").trim().split(',');
-                    for (var i = 0; i < prodIds.length; i++) {
-                        $.ajax({
-                            url: "https://lojavans.vtexcommercestable.com.br/api/catalog_system/pub/products/search/?fq=alternateIds_RefId:" + prodIds[i],
-                            type: 'GET',
-                            success: function (prodData) {
-                                var imgArray;
-                                var productName;
-                                var productLink;
-                                var imgUrl;
-                                var imgId;
-                                var productPrice;
-                                for (var j = 0; j < prodData[0].items.length; j++) {
-                                    if (prodData[0].items[j].sellers[0].commertialOffer.Price != 0) {
-                                        productName = prodData[0].productName;
-                                        productLink = '/' + prodData[0].linkText + '/p';
-                                        imgUrl = prodData[0].items[j].images[0].imageUrl;
-                                        imgId = prodData[0].items[j].images[0].imageId;
-                                        productPrice = 'R$' + prodData[0].items[j].sellers[0].commertialOffer.Price;
-                                    }
+                document.title = title + " | Vans";
 
-                                }
-
-                                imgArray = imgUrl.split(imgId);
-                                imgId = imgId + '-222-222';
-                                imgUrl = imgArray[0] + imgId + imgArray[1];
-
-                                var prodHTML = '<div class="postRelatedProduct">';
-                                prodHTML += ' <a href="' + productLink + '"><img src="' + imgUrl + '" /></a>';
-                                prodHTML += ' <a href="' + productLink + '">';
-                                prodHTML += '   <h3>' + productName + '</h3>';
-                                prodHTML += '   <span class="bestPrice">' + productPrice + '</h3>';
-                                prodHTML += ' </a>';
-                                prodHTML += '</div>';
-
-                                $(relatedContainer).append(prodHTML);
-                            }
-                        });
-                    }
-                }
-                if (stats) {
-                    $(statsContainer).append(stats);
-                }
+                $blogContent.html(
+                    '<aside id="postTagArea">'+
+                        '<h3>Tags:</h3>'+
+                            '<div class="tagsContainer">'+'</div>'+
+                    '</aside>'+
+                    '<article>'+
+                        '<h1>' + title + '</h1>'+
+                        '<div>' + content + '</div>'+
+                    '</article>'+
+                    '<aside id="postProductAndStatsArea">'+
+                        '<div id="postProductArea">'+
+                            '<h3>Produtos relacionados</h3>'+
+                        '</div>'+
+                        '<div id="postStatsArea">'+'</div>'+
+                    '</aside>'
+                );
             }
         });
+    },
+    // get url id
+    getUrlParameter:function(sParam) {
+        var sPageURL = decodeURIComponent(window.location.search.substring(1));
+        var sURLVariables = sPageURL.split('&');
+        var sParameterName;
+        var i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : sParameterName[1];
+            }
+        }
     }
 };

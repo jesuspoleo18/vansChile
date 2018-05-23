@@ -1,0 +1,72 @@
+<!-- 
+ *
+ * Desarrollado por Ecomsur
+ * Foundation v.6.4
+ *
+ -->
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:vtex="http://www.vtex.com.br/2009/vtex-common" xmlns:vtex.cmc="http://www.vtex.com.br/2009/vtex-commerce"
+    lang="es" class="no-js">
+
+<!-- CONDITIONAL IE-->
+<vtex:contentPlaceHolder id="Conditional IE" />
+
+<!-- head -->
+<head>
+    <title>VANS CHILE | WEB OFICIAL</title>
+    <vtex:metaTags/>
+    <vtex:template id="0-vans-head" />
+</head>
+<!-- /.end head -->
+
+<!-- body -->
+
+<body>
+    <!-- off canvas wrapper -->
+    <div class="off-canvas-wrapper">
+
+        <!-- Strip Promotional - Controller Custom -->
+        <vtex:contentPlaceHolder id="CoverPop-up" />
+        <!-- /.end Strip Promotional - Controller Custom -->
+
+        <vtex:template id="0-vans-header" />
+
+        <!-- Minicart Fixed -->
+        <button id="cartFixed" type="button" class=" " data-toggle="offcanvas__minicart">
+            <vtex.cmc:AmountItemsInCart/>
+        </button>
+        <div id="offcanvas__minicart" class="off-canvas position-right" data-off-canvas="">
+            <vtex.cmc:AmountItemsInCart/>
+            <vtex.cmc:miniCart/>
+        </div>
+        <!-- /.end Minicart Fixed -->
+
+        <!-- off canvas content -->
+        <div class="off-canvas-content" data-off-canvas-content="">
+
+            <vtex:template id="0-vans-navigator" />
+
+            <!-- blog container -->
+            <main class="blog__container">
+                <!-- blog content -->
+                <section class="blog__content">
+
+                </section>
+                <!-- /.end blog content -->
+            </main>
+            <!-- /.end blog container -->
+
+            <vtex:template id="0-vans-footer" />
+        </div>
+        <!-- /.end off canvas content -->
+    </div>
+    <!-- /.end off canvas wrapper -->
+
+    <!-- Ladesk - Controller Custom -->
+    <vtex.cmc:ladesk/>
+    <!-- /.end Ladesk - Controller Custom -->
+</body>
+<!-- /.end body -->
+
+</html>
