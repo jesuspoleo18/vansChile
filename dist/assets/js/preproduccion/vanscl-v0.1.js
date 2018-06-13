@@ -4,7 +4,7 @@
 
 Projecto: eCommerce Vans Chile  - 2018
 Version:  1.0
-Ultimo cambio: 2018-05-23
+Ultimo cambio: 2018-06-13 | 17:57pm | J
 Asignado a:  Ecomsur - LLZ
 Primary use:  Ecommerce. 
 
@@ -32,7 +32,16 @@ Primary use:  Ecommerce.
 Execute Functions
 
 -------------------------fin---------------------------------*/
-
+// host brasil
+// var host = "https://blog.vans.com.br";
+// host chile
+var host = "https://blog.vans.cl";
+var allPosts = host + "/wp-json/wp/v2/posts?_embed&per_page=4";
+var allPostsNotQty = host + "/wp-json/wp/v2/comments/?post=";
+var posts = host + "/wp-json/wp/v2/posts?_embed&per_page=4&categories=";
+var postUrl = host + "/wp-json/wp/v2/posts/";
+var urlAllPost = host + "/wp-json/wp/v2/posts?_embed";
+var urlCateg = host + "/wp-json/wp/v2/categories/";
 
 
 /*  [1.Others General ]
@@ -57,8 +66,11 @@ var confiGenerales = {
         confiGenerales.searchMobile();
         confiGenerales.loaderBusy();
         confiGenerales.backToTop();
+        confiGenerales.masterData();
         confiGenerales.formMasterData();
         confiGenerales.modal_shipping();
+        confiGenerales.modal_workUs();
+        confiGenerales.modal_wholeSale();
     },
 
     modal_shipping: function () {
@@ -77,6 +89,86 @@ var confiGenerales = {
             })
         })
     },
+
+    masterData: function () {
+
+        $('.vcl_contactForm-container').submit(function (e) {
+            e.preventDefault();
+            ContactForm();
+        });
+
+        function ContactForm() {
+
+            var datos = {};
+
+            datos.vcl_contacto_nombres = $('#vcl_contacto_nombres').val();
+            datos.vcl_contacto_apellidos = $('#vcl_contacto_apellidos').val();
+            datos.vcl_contacto_email = $("#vcl_contacto_email").val();
+            datos.vcl_contacto_telefono = $("#vcl_contacto_telefono").val();
+            datos.vcl_contacto_asunto = $("#vcl_contacto_asunto").val();
+            datos.vcl_contacto_motivo = $("#vcl_contacto_motivo").val();
+
+            $.ajax({
+                accept: 'application/vnd.vtex.ds.v10+json',
+                contentType: 'application/json; charset=utf-8',
+                crossDomain: true,
+                data: JSON.stringify(datos),
+                type: 'POST',
+                url: '//api.vtexcrm.com.br/vanscl/dataentities/VC/documents',
+                success: function (data) {
+                    $(".vcl_contactForm-container input[type='text'],.vcl_contactForm-container input[type='email'],.vcl_contactForm-container textarea").val('');
+                    //$('#NewsAprob').foundation('open');
+                    swal({
+                        title: '¡Gracias!',
+                        html: "Tus datos han sido enviados.",
+                        type: 'success',
+                        confirmButtonColor: '#C9192Es',
+                        confirmButtonText: 'Volver al sitio'
+                    });
+                },
+                error: function (data) {
+                    //$('#NewsError').foundation('open');
+                    swal({
+                        title: 'Error',
+                        html: "El formulario no ha podido registrar tus datos. <br> Prueba completando nuevamente en todos los campos correspondientes de forma correcta. ",
+                        type: 'error',
+                        confirmButtonColor: '#C9192E',
+                        confirmButtonText: 'Volver'
+                    });
+                }
+            });
+        }
+    },
+    modal_workUs: function () {
+        $('.modal_workUs').on('click', function () {
+            swal({
+                //title: 'TRABAJA CON NOSOTROS',
+                //showConfirmButton: false,
+                width: '75%',
+                customClass: 'modal_workUs--wrap',
+                html: '<p>' +
+                    'Vans is part of the Outdoor & Action Sport division at VF Corporation. Organized in 1899, VF Corporation is a global leader in branded lifestyle apparel, footwear and accessories, with global iconic brands, 65,000 associates and $11.8 billion in revenue. Our businesses and brands are organized into four categories called coalitions, comprising: Outdoor & Action Sports, Jeanswear, Imagewear, and Sportwear. While VF is highly diversified across brands, products, distribution channels and geographies, our One VF culture and approach to doing business provide a unique and powerful competitive advantage. <br><br>' +
+                    '<span class="modal_workUs--btn">If you want to work with us, send us an email to ' +
+                    '<strong>rrhh@vans.cl<strong></span>' +
+                    '</p>',
+            })
+        })
+    },
+
+    modal_wholeSale: function () {
+        $('.modal_wholeSale').on('click', function () {
+            swal({
+                //title: 'COMPRAS MAYORISTAS',
+                //showConfirmButton: false,
+                customClass: 'modal_wholeSale--wrap',
+                html: '<p>' +
+                    'Para compras mayoristas, envíanos un mail a ' +
+                    '<strong>wholesale@vans.cl</strong>' +
+                    '</p>',
+            })
+        })
+    },
+
 
     search_icon: function () {
         $('.fas.fa-search').on('click', function () {
@@ -136,7 +228,11 @@ var confiGenerales = {
         function Newsletter() {
             var datos = {};
             datos.Email_nw = $('#Email_nw').val();
-            //datos.Nombre_nw = $('#Nombre_nw').val();
+            datos.SexoHombre_nw = $('#SexoHombre_nw:checked').val();
+            datos.SexoMujer_nw = $('#SexoMujer_nw:checked').val();
+            datos.SexoOtro_nw = $('#SexoOtro_nw:checked').val();
+            datos.SexoNo_nw = $('#SexoNo_nw:checked').val();
+            datos.date_nw = $('#date_nw').val();
             $.ajax({
                 accept: 'application/vnd.vtex.ds.v10+json',
                 contentType: 'application/json; charset=utf-8',
@@ -208,7 +304,7 @@ var confiGenerales = {
             });
         }
     },
-}
+};
 
 $(function () {
     confiGenerales.init();
@@ -284,8 +380,7 @@ function formataPreco(seletor) {
             $(this).html(novoConteudoPreco);
         }
     });
-};
-
+}
 
 //FORMAT SKU PRICE RELOAD
 function FormatSkuPrice() {
@@ -299,8 +394,6 @@ function FormatSkuPrice() {
         });
     });
 }
-
-
 
 /* [3.Slide Home]
 =========================================*/
@@ -316,7 +409,7 @@ function slideHome() {
         fade: false,
         speed: 1000
     });
-};
+}
 
 /* [3.1.Slide Depto]
 =========================================*/
@@ -332,7 +425,7 @@ function slideDepto() {
         fade: false,
         speed: 1000
     });
-};
+}
 
 /* [3.2.Slide Depto]
 =========================================*/
@@ -347,8 +440,7 @@ function slidePromo() {
         fade: false,
         speed: 500
     });
-};
-
+}
 
 /* [11.Resize Offcanvas]
 =========================================*/
@@ -407,7 +499,7 @@ function carouselProductOutstanding() {
             }
         }]
     });
-};
+}
 
 /* [5.Carousel Product Featured Sheet Product
 =========================================*/
@@ -448,7 +540,7 @@ function carouselProductOutstandingSheet() {
             }
         }]
     });
-};
+}
 
 /* [5.2.Carousel Product Featured Sheet Product
 =========================================*/
@@ -489,8 +581,7 @@ function carouselDeptoOutstandingSheet() {
             }
         }]
     });
-};
-
+}
 
 /* [6.Add to Cart From Sheet Product
 =========================================*/
@@ -539,7 +630,6 @@ function addToCartFProduct() {
     });
 }
 
-
 function secondImg() {
 
     var $responsive = $(window).width();
@@ -563,40 +653,32 @@ function secondImg() {
                 _thisImg.find(".productImage").wrap('<div class="first-img"></div>');
 
                 _thisParent.each(function () {
-                    var _thisId = $(this).find(".wrapper-buy-button-asynchronous").attr("class").split("bba")[1];
-                    catalogProductId = _thisId;
-                    //console.log(_thisId);
 
-                    $.ajax({
-                        url: "https://vanscl.vtexcommercestable.com.br/api/catalog_system/pub/products/search/?fq=productId:" + catalogProductId + "",
-                        dataType: 'json',
-                        type: 'GET',
-                        crossDomain: true,
-                        success: function (data) {
-                            //console.log(data[0].items[0].images.length);
-                            if (data[0].items[0].images.length > 1) {
+                    if ($(this).find(".wrapper-buy-button-asynchronous").length) {
+                        var _thisId = $(this).find(".wrapper-buy-button-asynchronous").attr("class").split("bba")[1];
+                        catalogProductId = _thisId;
+                        // console.log(_thisId);
 
-                                var $elements = [],
-                                    a = data[0].items[0].images[1].imageTag,
-                                    b = a.replace(/[#~]/g, "").replace(/-width-\b/g, "-450-").replace(/-height\b/g, "-643").replace(/\s*(width)="[^"]+"\s*/g, " width='450'").replace(/\s*(height)="[^"]+"\s*/g, " height='643'"),
-                                    $el = '<div class="second-img hover">' + b + '</div>';
-                                //console.log($el)
-
-                                _thisImg.append($el);
-                            } else {
-                                var $elements = [],
-                                    a = data[0].items[0].images[0].imageTag,
-                                    b = a.replace(/[#~]/g, "").replace(/-width-\b/g, "-450-").replace(/-height\b/g, "-643").replace(/\s*(width)="[^"]+"\s*/g, " width='450'").replace(/\s*(height)="[^"]+"\s*/g, " height='643'"),
-                                    $el = '<div class="second-img hover">' + b + '</div>';
-                                //console.log($el)
+                        $.ajax({
+                            url: "https://vanscl.vtexcommercestable.com.br/api/catalog_system/pub/products/search/?fq=productId:" +
+                                catalogProductId + "",
+                            dataType: 'json',
+                            type: 'GET',
+                            crossDomain: true,
+                            success: function (data) {
+                                // console.log(data[0].items[0].images);
+                                var $elements = [];
+                                a = data[0].items[0].images[1].imageTag;
+                                b = a.replace(/[#~]/g, "").replace(/-width-\b/g, "-450-").replace(/-height\b/g, "-643").replace(/\s*(width)="[^"]+"\s*/g, " width='450'").replace(/\s*(height)="[^"]+"\s*/g, " height='643'");
+                                $el = `<div class='second-img hover'>${b}</div>`;
 
                                 _thisImg.append($el);
                             }
-                        }
-                    });
+                        });
+                    }
+
                 });
             }
-            // });
         });
 
     }
@@ -684,8 +766,6 @@ function miniatura() {
         });
     }
 }
-
-
 
 /* [12.Account
 =========================================*/
@@ -800,7 +880,6 @@ showContentAccount = function () {
     });
 };
 
-
 var regiones = [],
     comunas = [],
     country = 'CHL';
@@ -811,7 +890,6 @@ $(function () {
 
 $('.addressUser').removeClass('hide');
 $('.address-display-block .address-display').removeClass('row');
-
 
 function loadRegionComuna() {
     $.ajax({
@@ -987,8 +1065,6 @@ $(".address-update").click(function () {
     }
 });
 
-
-
 //address delete open pop
 $(".delete").click(function () {
     var addressName = $(this).attr('data-addressname');
@@ -996,7 +1072,6 @@ $(".delete").click(function () {
     $("#exclude-message").html(replaced);
     $("#address-delete").attr('data-addressname', addressName);
 });
-
 
 //address delete exclude click
 $("#address-delete").click(function () {
@@ -1025,10 +1100,6 @@ $("#address-delete").click(function () {
         });
     }
 });
-
-
-
-
 
 //INFINITY SCROLL
 if ("function" !== typeof (String.prototype.trim)) String.prototype.trim = function () {
@@ -1060,19 +1131,19 @@ if ("function" !== typeof (String.prototype.trim)) String.prototype.trim = funct
                     } catch (d) {
                         try {
                             console.info(a.join("\n"))
-                        } catch (e) { }
+                        } catch (e) {}
                     } else try {
                         console.error.apply(console, a)
                     } catch (f) {
                         try {
                             console.error(a.join("\n"))
-                        } catch (g) { }
+                        } catch (g) {}
                     } else try {
                         console.warn.apply(console, a)
                     } catch (h) {
                         try {
                             console.warn(a.join("\n"))
-                        } catch (k) { }
+                        } catch (k) {}
                     }
             }
         };
@@ -1089,7 +1160,7 @@ if ("function" !== typeof (String.prototype.trim)) String.prototype.trim = funct
             // Define en qué selector la acción de observar el desplazamiento será aplicado (ej .: $ (window) .scroll (...))
             scrollBy: document,
             // Callback Cuando se completa una solicitud ajax de la vitrina (prateleira)
-            callback: function () { },
+            callback: function () {},
             // Cálculo del tamaño del footer para que una nueva página sea llamada antes de que el usuario llegue al "final" del sitio
             getShelfHeight: function ($this) {
                 return ($this.scrollTop() + $this.height());
@@ -1258,9 +1329,9 @@ if ("function" !== typeof (String.prototype.trim)) String.prototype.trim = funct
     });
 
     // Anula función de VTEX que hace desplazarse en la página después de paginar
-    window.goToTopPage = function () { };
+    window.goToTopPage = function () {};
     $(function () {
-        window.goToTopPage = function () { };
+        window.goToTopPage = function () {};
     });
 })(jQuery);
 
@@ -1276,22 +1347,24 @@ var blog = {
     // append posts to home
     getPostHome: function (callback) {
 
-        var host = "https://blog.vans.com.br";
-        var allPosts = host + "/wp-json/wp/v2/posts?_embed&per_page=4";
-        var posts = host + "/wp-json/wp/v2/posts?_embed&per_page=4&categories=";
+        // var host = "https://blog.vans.com.br";
+        // var allPosts = host + "/wp-json/wp/v2/posts?_embed&per_page=4";
+        // var posts = host + "/wp-json/wp/v2/posts?_embed&per_page=4&categories=";
         var $feedBlog = "#feedBlog";
 
         blog.getPosts(allPosts, $feedBlog + " " + ".feedAll");
+        // blog.getPosts(posts + "5", $feedBlog + " " + ".feedFeminino");
+        // blog.getPosts(posts + "11", $feedBlog + " " + ".feedHouse");
+        blog.getPosts(posts + "154", $feedBlog + " " + ".feedSkate");
+        blog.getPosts(posts + "156", $feedBlog + " " + ".feedBmx");
+        blog.getPosts(posts + "155", $feedBlog + " " + ".feedSurf");
+        blog.getPosts(posts + "157", $feedBlog + " " + ".feedSnowboard");
+        // blog.getPosts(posts + "12", $feedBlog + " " + ".feedEventos");
+        // blog.getPosts(posts + "6", $feedBlog + " " + ".feedFeminino");
+        // blog.getPosts(posts + "10", $feedBlog + " " + ".feedKids");
+        // blog.getPosts(posts + "2", $feedBlog + " " + ".feedMasculino");
+        // blog.getPosts(posts + "13", $feedBlog + " " + ".feedNews");
         // console.log($feedBlog + " " + ".feedAll");
-        blog.getPosts(posts + "7", $feedBlog + " " + ".feedClassis");
-        blog.getPosts(posts + "12", $feedBlog + " " + ".feedEventos");
-        blog.getPosts(posts + "6", $feedBlog + " " + ".feedFeminino");
-        blog.getPosts(posts + "11", $feedBlog + " " + ".feedHouse");
-        blog.getPosts(posts + "10", $feedBlog + " " + ".feedKids");
-        blog.getPosts(posts + "2", $feedBlog + " " + ".feedMasculino");
-        blog.getPosts(posts + "13", $feedBlog + " " + ".feedNews");
-        blog.getPosts(posts + "3", $feedBlog + " " + ".feedSkate");
-        blog.getPosts(posts + "8", $feedBlog + " " + ".feedSurf");
         blog.tabs();
         setTimeout(function () {
             callback();
@@ -1301,9 +1374,9 @@ var blog = {
     getPostsToPagePost: function () {
         var $body = $("body.post");
         var $blogContent = $(".post__page-content");
-        var postUrl = "https://blog.vans.com.br/wp-json/wp/v2/posts/";
+        // var postUrl = "https://blog.vans.com.br/wp-json/wp/v2/posts/";
         var tech = blog.getUrlParameter('id');
-        var urlAllPost = "https://blog.vans.com.br/wp-json/wp/v2/posts?_embed";
+        // var urlAllPost = "https://blog.vans.com.br/wp-json/wp/v2/posts?_embed";
 
         if ($body.length) {
             // $blogContent.html('<div class="container-center blog"></div>');
@@ -1454,7 +1527,7 @@ var blog = {
     },
     // get tags to post page
     getTags: function (param) {
-        var urlCateg = "https://blog.vans.com.br/wp-json/wp/v2/categories/";
+        // var urlCateg = "https://blog.vans.com.br/wp-json/wp/v2/categories/";
         $.each(param, function (i, val) {
             $.ajax({
                 url: urlCateg + param[i],
@@ -1472,11 +1545,12 @@ var blog = {
     },
     getProductsRelated: function (id_Post) {
         var postId;
-        var host = "https://blog.vans.com.br";
-        var allPosts = host + "/wp-json/wp/v2/posts=";
+        // var host = "https://blog.vans.com.br";
+        // var allPosts = host + "/wp-json/wp/v2/posts=";
         postId = id_Post;
         $.ajax({
-            url: "https://blog.vans.com.br/wp-json/wp/v2/comments/?post=" + postId,
+            // url: "https://blog.vans.com.br/wp-json/wp/v2/comments/?post=" + postId,
+            url: allPostsNotQty + postId,
             type: 'GET',
             crossDomain: true,
             cache: false,
@@ -1493,8 +1567,7 @@ var blog = {
                         stats = commentData[1].content.rendered;
                         prodIds = commentData[0].content.rendered;
                     }
-                }
-                else if (commentData.length == 1) {
+                } else if (commentData.length == 1) {
                     //one comment
                     if (commentData[0].content.rendered.indexOf('h3') >= 0 && commentData[0].content.rendered.indexOf('h4') >= 0) { //finding out wether it's product or stats
                         stats = commentData[0].content.rendered;
@@ -1503,8 +1576,7 @@ var blog = {
                         stats = false;
                         prodIds = commentData[0].content.rendered;
                     }
-                }
-                else if (commentData.length == 0 || commentData.length > 2) {
+                } else if (commentData.length == 0 || commentData.length > 2) {
                     //no comments or too much comments
                     stats = prodIds = false;
                 }
@@ -1515,7 +1587,7 @@ var blog = {
                     var prodIdsFormat = prodIds.replace(/<[^>]*>/g, "").trim().split(',');
 
                     console.log(prodIdsFormat);
-                    $.each(prodIdsFormat, function(i,val) {
+                    $.each(prodIdsFormat, function (i, val) {
                         $.ajax({
                             url: checkProduct + this,
                             type: 'GET',
@@ -1532,6 +1604,7 @@ var blog = {
         });
     }
 };
+
 /* [Execute Functions]
 =========================================*/
 $(document).ready(function ($) {
@@ -1541,7 +1614,6 @@ $(document).ready(function ($) {
     slideHome();
     slideDepto();
     slidePromo();
-    //carouselBrand();
     carouselProductOutstanding();
     carouselDeptoOutstandingSheet();
     //carouselProductOutstandingSheet();
@@ -1551,10 +1623,26 @@ $(document).ready(function ($) {
     secondImg();
     miniatura();
     blog.init();
-    //miniatura_dos();
 
     $(window).bind("resize", function () {
         resizeoffcanvas();
     });
 
 });
+
+function oldBrowsers() {
+    var promiseSupport = false;
+    try {
+        var promise = new Promise(function (x, y) {});
+        promiseSupport = true;
+    } catch (e) {
+        var head = document.getElementsByTagName('head')[0];
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js';
+        head.appendChild(script);
+    }
+    if (window.ActiveXObject || "ActiveXObject" in window) {
+        alert("TCL Chile está optimizado para versiones superiores a IE11, es posible que no pueda disfrutar de todas las funcionalidades que ofrecemos con esta versión de su navegador.");
+    }
+}
