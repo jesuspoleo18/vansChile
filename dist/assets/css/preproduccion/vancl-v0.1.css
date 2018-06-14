@@ -4,7 +4,7 @@
 
 Proyecto:  eCommerce Vans Chile - 2018
 Version: 1.0
-Ultimo cambio:  2018-06-13 18:11pm | J
+Ultimo cambio:  2018-06-14 11:46am | J
 Asignado a:  LLZ
 
 ----------------------
@@ -787,7 +787,7 @@ nav #nav__widemenu .top-bar .top-bar-right .mega-menu-more>a.nav__item-depto.hov
 }
 
 /*.breadcrumbs-container .bread-crumb ul li:first-of-type::before {
-content: 'Estás Aquí: ';
+content: 'EstÃ¡s AquÃ­: ';
 font-size: .750rem;
 line-height: normal;
 white-space: nowrap;
@@ -2044,13 +2044,13 @@ h3.shop-section__title {
     font-size: 0.875rem;
 }
 
-/*#category-navegador .menu-departamento .search-single-navigator ul.Características {
+/*#category-navegador .menu-departamento .search-single-navigator ul.CaracterÃ­sticas {
     border-bottom: 1px dashed #bebebe;
 }
-#category-navegador .menu-departamento .search-single-navigator ul.Talla.Características li {
+#category-navegador .menu-departamento .search-single-navigator ul.Talla.CaracterÃ­sticas li {
 	display: inline-flex;
 }
-#category-navegador .menu-departamento .search-single-navigator ul.Talla.Características li a {
+#category-navegador .menu-departamento .search-single-navigator ul.Talla.CaracterÃ­sticas li a {
     width: 50px;
 	height: 50px;
 	font-size: .750rem;
@@ -2174,7 +2174,7 @@ background-color: #d9bf98;
     background-color: #d9bf98;
 }
 
-#category-navegador .menu-departamento .search-single-navigator .Grupo.Color li a[title="Marrón"]:before {
+#category-navegador .menu-departamento .search-single-navigator .Grupo.Color li a[title="MarrÃ³n"]:before {
     background-color: #6d3e00;
 }
 
@@ -2202,7 +2202,7 @@ background-color: #E91E63;
     background-color: #f38a00;
 }
 
-#category-navegador .menu-departamento .search-single-navigator .Grupo.Color li a[title="Púrpura"]:before {
+#category-navegador .menu-departamento .search-single-navigator .Grupo.Color li a[title="PÃºrpura"]:before {
     background-color: #9e009e;
 }
 
@@ -5449,10 +5449,10 @@ fieldset {
     width: 100%;
 }
 
-.post__article>h1+div>p:first-child,
+/* .post__article>h1+div>p:first-child,
 .post__article>h1+div>p:last-child {
     display: none;
-}
+} */
 
 .post__article>h1+div>p>img {
     width: 100%;
@@ -5488,19 +5488,44 @@ fieldset {
     justify-content: center;
 }
 
+.feedBlogMain {
+    max-width: 100%;
+    padding: 0;
+}
+
 .feedBlog__info-tabs {
+    background: white;
+    border-top: 1px solid #a4d0da;
+    border-bottom: 1px solid #a4d0da;
     margin-bottom: 2rem;
+    padding: .75rem 0;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
+#feedBlog {
+    width: 90%;
+}
+
 .tab__btn {
+    color: #64686b;
+    font-family: Helvetica Neue, Arial, sans-serif;
+    font-size: .7rem;
     position: relative;
 }
 
+.tab__btn:not(.inactive) {
+    color: #c9192e;
+}
+
+.tab__btn.feedAll {
+    text-transform: lowercase;
+}
+
 .tab__btn:after {
+    color: #c7cbce;
     content: "/";
     margin: 0 1rem;
     right: 0;
@@ -5540,6 +5565,19 @@ fieldset {
 
 .post-item:last-of-type {
     margin-right: 0;
+}
+
+.ratio-square img {
+    /*     border:1px solid red; */
+    height: 260px;
+    width: 100%;
+}
+
+#feedBlog .thumb+h5 {
+    font-family: Helvetica Neue, Arial, sans-serif;
+    font-weight: bold;
+    margin-top: 2rem;
+    text-transform: uppercase;
 }
 
 @media only screen and (max-width:40em) {

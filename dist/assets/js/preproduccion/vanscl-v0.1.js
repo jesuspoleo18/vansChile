@@ -4,7 +4,7 @@
 
 Projecto: eCommerce Vans Chile  - 2018
 Version:  1.0
-Ultimo cambio: 2018-06-13 | 17:57pm | J
+Ultimo cambio: 2018-06-13 | 11:45 am | J
 Asignado a:  Ecomsur - LLZ
 Primary use:  Ecommerce. 
 
@@ -1508,8 +1508,21 @@ var blog = {
                 blog.getTags(data.categories);
                 // ger related products
                 blog.getProductsRelated(postId);
+                // clean paragraph post
+                blog.cleanParagraphPostPage('[/et_pb_text]');
+                blog.cleanParagraphPostPage('[et_pb_');
             }
         });
+    },
+    cleanParagraphPostPage: function(str){
+        let paragraphPost = $('.post__article').find('p');
+        paragraphPost.each(function () {
+            let _thisText = $(this).text();
+            if (_thisText.indexOf(str) > -1) {
+                $(this).hide();
+            }
+        });
+
     },
     // get url id
     getUrlParameter: function (sParam) {
