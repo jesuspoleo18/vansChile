@@ -4,7 +4,7 @@
 
 Proyecto:  eCommerce Vans Chile - 2018
 Version: 1.0
-Ultimo cambio:  2018-06-14 11:46am | J
+Ultimo cambio:  2018-06-15 12:49 pm | J
 Asignado a:  LLZ
 
 ----------------------
@@ -82,6 +82,8 @@ c2.Promises Home
 c3.Product Featured Home/SheetProduct
 c4.Carrusel Product Featured Home/Sheet Product
 c5.Slide Home
+c6.feedBlog home
+c7.Mediaquerie feedBlog home
 
 
 
@@ -131,6 +133,7 @@ m0.Buttom Chat
 n0.Flag
 
 o0.Post page
+o1.Mediaquerie post page
 
 
 -------------------------fin---------------------------------*/
@@ -4351,8 +4354,8 @@ body.departamento.deptoKids {
 
 .back-to-top {
     position: fixed;
-    bottom: 35px;
-    right: 30px;
+    bottom: 80px;
+    right: 25px;
     background-color: #C9192E;
     color: #000000;
     font-size: 4rem;
@@ -5475,6 +5478,32 @@ fieldset {
     padding-bottom: .5rem;
 }
 
+/*[o1.Mediaquerie post page]
+======================================================= */
+
+/* small */
+@media only screen and (max-width: 40em) {
+    .post__tags,
+    .post__related-container {
+        /*     border: 1px solid blue; */
+        border:none;
+        width: 100%;
+    }
+    .post__tags{
+        margin-bottom:2rem;
+    }
+    .post__article{
+        width:100%;
+    }
+
+}
+/* medium */
+@media only screen and (min-width: 40.063em) and (max-width: 64em) { }
+/* large */
+@media screen and (min-width: 64em) {}
+/* xlarge */
+@media only screen and (min-width: 90.063em) { }
+
 /*[c6.feedBlog home ]
 ======================================================= */
 
@@ -5580,11 +5609,49 @@ fieldset {
     text-transform: uppercase;
 }
 
-@media only screen and (max-width:40em) {
-    .feedBlogMain {
+
+/*[c7.Mediaquerie feedBlog home ]  
+======================================================= */
+
+/* small */
+@media only screen and (max-width: 40em) {
+/*     .feedBlogMain {
         display: none;
+    } */
+    #feedBlog{
+        width:100%;
+    }
+    .tab_content{
+        width:100%;
+        display:flex;
+        flex-flow:wrap;
+        justify-content:space-between;
+    }
+    .tab_content .post-item{
+        margin-bottom:1rem;
+        width:48%;
+    }
+    #feedBlog .thumb+h5{
+        font-size:1.2rem;
+    }
+    .ratio-square img{
+        height:145px;
     }
 }
+/* medium */
+@media only screen and (min-width: 40.063em) and (max-width: 64em) {
+    .tab_content{
+        flex-flow:wrap;
+        justify-content:space-between;
+    }
+   .post-item{
+        width:48%;
+    }
+}
+/* large */
+@media screen and (min-width: 64em) {}
+/* xlarge */
+@media only screen and (min-width: 90.063em) { }
 
 /*[o0.Post page]  
 ======================================================= */

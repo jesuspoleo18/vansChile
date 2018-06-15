@@ -1399,8 +1399,8 @@ var blog = {
         var $b = '.tab_content';
 
         $($a + ':not(:first)').addClass('inactive');
-        $($b).hide();
-        $($b + ':first').show();
+        $($b).hide().css('display','none');
+        $($b + ':first').show().css('display','flex');
 
         $($a).click(function () {
             var t = $(this).attr('id');
@@ -1408,8 +1408,8 @@ var blog = {
                 $($a).addClass('inactive');
                 $(this).removeClass('inactive');
 
-                $($b).hide();
-                $('#' + t + 'C').fadeIn('slow');
+                $($b).hide().css('display','none');
+                $('#' + t + 'C').fadeIn('slow').css('display','flex');
             }
         });
         return false;
