@@ -4,7 +4,7 @@
 
 Proyecto:  eCommerce Vans Chile - 2018
 Version: 1.0
-Ultimo cambio:  2018-06-15 14:41 pm | J
+Ultimo cambio:  2018-06-15 17:33 pm | J
 Asignado a:  LLZ
 
 ----------------------
@@ -696,7 +696,7 @@ nav #nav__widemenu .top-bar .top-bar-right .mega-menu-more .dropdown-pane {
     right: 0% !important;
     min-height: 18.750rem;
     padding: 3.125rem 0;
-    max-height: fit-content
+    max-height: fit-content;
 }
 
 nav #nav__widemenu .top-bar .top-bar-right .mega-menu .menu,
@@ -1001,6 +1001,8 @@ nav .nav__searcherHeader i:before {
     background: #000000;
     color: #ffffff;
     padding: .3rem 0;
+    position: relative;
+    z-index: 1;
 }
 
 .msjPromo .msjPromo__slide {
@@ -3877,7 +3879,7 @@ body.departamento.deptoKids {
     width: 105px;
     height: 71px;
     margin: -35px 45% 0;
-    z-index: 4;
+    z-index: 1;
     position: absolute;
 }
 
@@ -5356,9 +5358,17 @@ fieldset {
     border: 0 !important;
 }
 
+#nav__widemenu {
+    /*     border:1px solid red; */
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
+
 .top-bar {
     height: inherit !important;
     line-height: inherit !important;
+    position: relative;
 }
 
 @media only screen and (min-width: 861px) {
@@ -6144,7 +6154,12 @@ h3.shop-subnav__title {
 
 .shop-subnav__links li {
     line-height: 1.65em;
-    display: inline-block
+    display: inline-block;
+}
+
+.hombre__ver-todo,
+.mujer__ver-todo {
+    display: none !Important;
 }
 
 .shop-subnav__links li:after {
