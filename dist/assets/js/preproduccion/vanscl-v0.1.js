@@ -4,7 +4,7 @@
 
 Projecto: eCommerce Vans Chile  - 2018
 Version:  1.0
-Ultimo cambio: 2018-06-13 | 11:45 am | J
+Ultimo cambio: 2018-06-21 | 14:48 pm | J
 Asignado a:  Ecomsur - LLZ
 Primary use:  Ecommerce. 
 
@@ -52,7 +52,7 @@ $(".sku-notifyme-client-name.notifyme-client-name").attr("placeholder", "Ingresa
 $(".sku-notifyme-client-email.notifyme-client-email").attr("placeholder", "Ingresa tu email...");
 
 //CHANGE TEXT BACK TO OFFCANVAS
-Foundation.Drilldown.defaults.backButton = '<li class="js-drilldown-back"><a>Volver</a></li>'
+Foundation.Drilldown.defaults.backButton = '<li class="js-drilldown-back"><a>Volver</a></li>';
 
 var confiGenerales = {
 
@@ -86,8 +86,8 @@ var confiGenerales = {
                     '<li>No canjeable por dinero en efectivo.</li>' +
                     '<li>Oferta sujeta a cambios en cualquier momento sin previo aviso.</li>' +
                     '</ul>',
-            })
-        })
+            });
+        });
     },
 
     masterData: function () {
@@ -151,8 +151,8 @@ var confiGenerales = {
                     '<span class="modal_workUs--btn">If you want to work with us, send us an email to ' +
                     '<strong>rrhh@vans.cl<strong></span>' +
                     '</p>',
-            })
-        })
+            });
+        });
     },
 
     modal_wholeSale: function () {
@@ -165,15 +165,15 @@ var confiGenerales = {
                     'Para compras mayoristas, envíanos un mail a ' +
                     '<strong>wholesale@vans.cl</strong>' +
                     '</p>',
-            })
-        })
+            });
+        });
     },
 
 
     search_icon: function () {
         $('.fas.fa-search').on('click', function () {
             $('.btn-buscar').trigger('click');
-        })
+        });
     },
 
     searchMobile: function () {
@@ -431,7 +431,7 @@ function slideDepto() {
 =========================================*/
 function slidePromo() {
     $('.msjPromo__slide').slick({
-        arrows: false,
+        // arrows: false,
         dots: false,
         arrows: true,
         autoplay: true,
@@ -1114,7 +1114,6 @@ if ("function" !== typeof (String.prototype.trim)) String.prototype.trim = funct
     window._QuatroDigital_InfinityScroll = window._QuatroDigital_InfinityScroll || {};
 
     $.fn.QD_infinityScroll = function (opts) {
-        "use strict";
 
         // Reducir el nombre de la variable pública
         var $public = window._QuatroDigital_InfinityScroll;
@@ -1127,22 +1126,22 @@ if ("function" !== typeof (String.prototype.trim)) String.prototype.trim = funct
                 "object" === typeof c ? (c.unshift("[" + extTitle + "]\n"), a = c) : a = ["[" + extTitle + "]\n" + c];
                 if ("undefined" === typeof b || "alerta" !== b.toLowerCase() && "aviso" !== b.toLowerCase())
                     if ("undefined" !== typeof b && "info" === b.toLowerCase()) try {
-                        console.info.apply(console, a)
+                        console.info.apply(console, a);
                     } catch (d) {
                         try {
-                            console.info(a.join("\n"))
+                            console.info(a.join("\n"));
                         } catch (e) {}
                     } else try {
-                        console.error.apply(console, a)
+                        console.error.apply(console, a);
                     } catch (f) {
                         try {
-                            console.error(a.join("\n"))
+                            console.error(a.join("\n"));
                         } catch (g) {}
                     } else try {
-                        console.warn.apply(console, a)
+                        console.warn.apply(console, a);
                     } catch (h) {
                         try {
-                            console.warn(a.join("\n"))
+                            console.warn(a.join("\n"));
                         } catch (k) {}
                     }
             }
@@ -1209,7 +1208,6 @@ if ("function" !== typeof (String.prototype.trim)) String.prototype.trim = funct
         $public.currentPage = 2;
 
         var getSearchUrl = function () {
-            "use strict";
             var url;
             var preg = /\/buscapagina\?.+&PageNumber=/i;
             var pregCollection = /\/paginaprateleira\?.+PageNumber=/i;
@@ -1234,7 +1232,6 @@ if ("function" !== typeof (String.prototype.trim)) String.prototype.trim = funct
         };
 
         var infinityScroll = function () {
-            "use strict";
             $public.searchUrl = (null !== options.searchUrl) ? options.searchUrl : getSearchUrl();
             $public.currentStatus = true;
 
@@ -1314,7 +1311,7 @@ if ("function" !== typeof (String.prototype.trim)) String.prototype.trim = funct
                     }, 70);
                 });
             }
-        }
+        };
 
         //scrollToTop();
         infinityScroll();
@@ -1353,16 +1350,16 @@ var blog = {
         var $feedBlog = "#feedBlog";
 
         blog.getPosts(allPosts, $feedBlog + " " + ".feedAll");
-        // blog.getPosts(posts + "5", $feedBlog + " " + ".feedFeminino");
-        // blog.getPosts(posts + "11", $feedBlog + " " + ".feedHouse");
+        blog.getPosts(posts + "165", $feedBlog + " " + ".feedFeminino");
+        blog.getPosts(posts + "163", $feedBlog + " " + ".feedHouse");
         blog.getPosts(posts + "154", $feedBlog + " " + ".feedSkate");
         blog.getPosts(posts + "156", $feedBlog + " " + ".feedBmx");
         blog.getPosts(posts + "155", $feedBlog + " " + ".feedSurf");
         blog.getPosts(posts + "157", $feedBlog + " " + ".feedSnowboard");
         // blog.getPosts(posts + "12", $feedBlog + " " + ".feedEventos");
         // blog.getPosts(posts + "6", $feedBlog + " " + ".feedFeminino");
-        // blog.getPosts(posts + "10", $feedBlog + " " + ".feedKids");
-        // blog.getPosts(posts + "2", $feedBlog + " " + ".feedMasculino");
+        blog.getPosts(posts + "166", $feedBlog + " " + ".feedKids");
+        blog.getPosts(posts + "164", $feedBlog + " " + ".feedMasculino");
         // blog.getPosts(posts + "13", $feedBlog + " " + ".feedNews");
         // console.log($feedBlog + " " + ".feedAll");
         blog.tabs();
@@ -1381,7 +1378,8 @@ var blog = {
         if ($body.length) {
             // $blogContent.html('<div class="container-center blog"></div>');
             if (window.location.href.indexOf("id") > -1) {
-                blog.getPostPage(postUrl + tech, tech);
+                // blog.getPostPage(postUrl + tech, tech);
+                blog.getPostPage(postUrl + tech + '?_embed', tech);
             } else {
                 blog.getPosts(urlAllPost, ".post__page-content");
                 document.title = "Blog | Vans";
@@ -1484,7 +1482,7 @@ var blog = {
             success: function (data) {
                 var title = data.title.rendered;
                 var content = data.content.rendered;
-
+                var mainImag = data._embedded['wp:featuredmedia'][0].source_url;
                 // set title
                 document.title = title + " | Vans";
                 // append template
@@ -1495,6 +1493,7 @@ var blog = {
                     '</aside>' +
                     '<article class="post__article">' +
                     '<h1>' + title + '</h1>' +
+                    '<img class="tagMainImg" src="' + mainImag + '"/>' +
                     '<div>' + content + '</div>' +
                     '</article>' +
                     '<aside id="postProductAndStatsArea" class="post__related-container">' +
@@ -1547,13 +1546,24 @@ var blog = {
                 type: 'GET',
                 //dataType: 'jsonp',
                 success: function (dataTag) {
-                    var tagHref = '/' + dataTag.name;
+                    var tagNoSpace = dataTag.name.replace(/\s/g, '');
+                    var tagHref = '/' + tagNoSpace;
                     var tagName = dataTag.name;
                     var template = '<a href="' + tagHref + '" class="post__tag-item">' + tagName + '</a>';
                     var $tagContainer = $(".tagsContainer");
                     $tagContainer.append(template);
+                    blog.hideTxtElements('.post__tag-item','Destacados');
                 }
             });
+        });
+    },
+    hideTxtElements: function(el, word){
+        var $tags = $(el);
+        $tags.each(function(){
+            var _thisTxt = $(this).text();
+            if(_thisTxt == word){
+                $(this).hide();
+            }
         });
     },
     getProductsRelated: function (id_Post) {

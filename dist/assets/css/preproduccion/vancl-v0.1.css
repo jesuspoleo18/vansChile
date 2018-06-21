@@ -4,7 +4,7 @@
 
 Proyecto:  eCommerce Vans Chile - 2018
 Version: 1.0
-Ultimo cambio:  2018-06-15 12:49 pm | J
+Ultimo cambio:  2018-06-15 14:41 pm | J
 Asignado a:  LLZ
 
 ----------------------
@@ -790,7 +790,7 @@ nav #nav__widemenu .top-bar .top-bar-right .mega-menu-more>a.nav__item-depto.hov
 }
 
 /*.breadcrumbs-container .bread-crumb ul li:first-of-type::before {
-content: 'EstÃ¡s AquÃ­: ';
+content: 'EstÃƒÂ¡s AquÃƒÂ­: ';
 font-size: .750rem;
 line-height: normal;
 white-space: nowrap;
@@ -1037,7 +1037,7 @@ nav .nav__searcherHeader i:before {
 footer {
     background: #1c1c1c;
     color: #8d9293;
-    padding: 80px 0 30px;
+    padding: 80px 0 0px;
     margin-top: 30px;
 }
 
@@ -2047,13 +2047,13 @@ h3.shop-section__title {
     font-size: 0.875rem;
 }
 
-/*#category-navegador .menu-departamento .search-single-navigator ul.CaracterÃ­sticas {
+/*#category-navegador .menu-departamento .search-single-navigator ul.CaracterÃƒÂ­sticas {
     border-bottom: 1px dashed #bebebe;
 }
-#category-navegador .menu-departamento .search-single-navigator ul.Talla.CaracterÃ­sticas li {
+#category-navegador .menu-departamento .search-single-navigator ul.Talla.CaracterÃƒÂ­sticas li {
 	display: inline-flex;
 }
-#category-navegador .menu-departamento .search-single-navigator ul.Talla.CaracterÃ­sticas li a {
+#category-navegador .menu-departamento .search-single-navigator ul.Talla.CaracterÃƒÂ­sticas li a {
     width: 50px;
 	height: 50px;
 	font-size: .750rem;
@@ -2177,7 +2177,7 @@ background-color: #d9bf98;
     background-color: #d9bf98;
 }
 
-#category-navegador .menu-departamento .search-single-navigator .Grupo.Color li a[title="MarrÃ³n"]:before {
+#category-navegador .menu-departamento .search-single-navigator .Grupo.Color li a[title="MarrÃƒÂ³n"]:before {
     background-color: #6d3e00;
 }
 
@@ -2205,7 +2205,7 @@ background-color: #E91E63;
     background-color: #f38a00;
 }
 
-#category-navegador .menu-departamento .search-single-navigator .Grupo.Color li a[title="PÃºrpura"]:before {
+#category-navegador .menu-departamento .search-single-navigator .Grupo.Color li a[title="PÃƒÂºrpura"]:before {
     background-color: #9e009e;
 }
 
@@ -5431,6 +5431,13 @@ fieldset {
     justify-content: center;
 }
 
+.tagMainImg {
+    /*     object-fit: cover; */
+    /*     height: 450px; */
+    margin: 2rem;
+    /*     width: 100%; */
+}
+
 .post__article>h1+div {
     display: flex;
     flex-direction: column;
@@ -5482,27 +5489,37 @@ fieldset {
 ======================================================= */
 
 /* small */
+
 @media only screen and (max-width: 40em) {
     .post__tags,
     .post__related-container {
         /*     border: 1px solid blue; */
-        border:none;
+        border: none;
         width: 100%;
     }
-    .post__tags{
-        margin-bottom:2rem;
+    .post__tags {
+        margin-bottom: 2rem;
     }
-    .post__article{
-        width:100%;
+    .post__article {
+        width: 100%;
     }
-
 }
+
 /* medium */
-@media only screen and (min-width: 40.063em) and (max-width: 64em) { }
+
+@media only screen and (min-width: 40.063em) and (max-width: 64em) {}
+
 /* large */
+
 @media screen and (min-width: 64em) {}
+
 /* xlarge */
-@media only screen and (min-width: 90.063em) { }
+
+@media only screen and (min-width: 90.063em) {
+    .post__page-content {
+        width: 63%;
+    }
+}
 
 /*[c6.feedBlog home ]
 ======================================================= */
@@ -5609,49 +5626,59 @@ fieldset {
     text-transform: uppercase;
 }
 
-
 /*[c7.Mediaquerie feedBlog home ]  
 ======================================================= */
 
 /* small */
+
 @media only screen and (max-width: 40em) {
-/*     .feedBlogMain {
+    /*     .feedBlogMain {
         display: none;
     } */
-    #feedBlog{
-        width:100%;
+    #feedBlog {
+        width: 100%;
     }
-    .tab_content{
-        width:100%;
-        display:flex;
-        flex-flow:wrap;
-        justify-content:space-between;
+    .tab_content {
+        width: 100%;
+        display: flex;
+        flex-flow: wrap;
+        justify-content: space-between;
     }
-    .tab_content .post-item{
-        margin-bottom:1rem;
-        width:48%;
+    .tab_content .post-item {
+        margin-bottom: 1rem;
+        width: 48%;
     }
-    #feedBlog .thumb+h5{
-        font-size:1.2rem;
+    #feedBlog .thumb+h5 {
+        font-size: 1.2rem;
     }
-    .ratio-square img{
-        height:145px;
+    .ratio-square img {
+        height: 145px;
     }
 }
+
 /* medium */
+
 @media only screen and (min-width: 40.063em) and (max-width: 64em) {
-    .tab_content{
-        flex-flow:wrap;
-        justify-content:space-between;
+    .tab_content {
+        flex-flow: wrap;
+        justify-content: space-between;
     }
-   .post-item{
-        width:48%;
+    .post-item {
+        width: 48%;
     }
 }
+
 /* large */
+
 @media screen and (min-width: 64em) {}
+
 /* xlarge */
-@media only screen and (min-width: 90.063em) { }
+
+@media only screen and (min-width: 90.063em) {
+    #feedBlog {
+        width: 63%;
+    }
+}
 
 /*[o0.Post page]  
 ======================================================= */
@@ -6271,4 +6298,74 @@ h3.shop-subnav__title {
     padding: 0.5rem 1.5rem;
     color: #ffffff;
     text-decoration: underline;
+}
+
+/*Copyrigth =====================================================*/
+
+#footer-bottom {
+    border-top: 1px solid #313131;
+    font-family: 'BenchNine-Regular';
+    font-size: .85rem;
+    margin-top: 2rem;
+    padding: .8rem 1rem;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    box-pack: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    box-align: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+#footer-bottom span,
+#footer-bottom a,
+#footer-bottom p {
+    color: #fff;
+    margin: 0;
+    margin-right: .5rem;
+}
+
+#footer-bottom .footer-ecomsur,
+#footer-bottom .footer-copyright,
+#footer-bottom .footer-vtex {
+    padding: 0 .5rem;
+}
+
+#footer-bottom .footer-ecomsur {
+    border-right: 1px solid #ddd;
+}
+
+#footer-bottom .footer-ecomsur span {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    box-align: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+#footer-bottom .footer-vtex {
+    box-ordinal-group: 3;
+    -webkit-box-ordinal-group: 3;
+    -webkit-order: 2;
+    -ms-flex-order: 2;
+    order: 2;
+}
+
+#footer-bottom .footer-copyright {
+    font-size: .75rem;
+}
+
+#footer-bottom .footer-ecomsur img {
+    width: 80%;
 }
